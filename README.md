@@ -12,12 +12,13 @@ users_and_facs_df, travel_dict, users, facs = load_an_instance(1, False)
 	- BFLP_MIP.py: This file contains the code for running the BFLP MIP.
 	- BUAP_heuristics.py: This file contains all the BUAP heuristics and also implementations of those that are just needed for use within the BFLP heuristics, e.g. the optimisation of relaxation rounding when used in the first version of close greedy.
 	- BUAP_MIP.py: This file contains the code for running the BUAP MIP and also for editing the model, as needed for relaxation rouding with the first version of close greedy.
-	- results_heuristics.py: This file contains functions for running all the heuristics across multiple budget factors and input parameters. For each BFLP heuristics, a function for running the heuristics with multiple inputs (function name starting with get_...) exists, resulting in a json, and a function for converting these results into more easily readable tables (function name starting with write). Any results created here will be saved in the own_results folder, which will be created if it does not exist yet.
+    - main.py: This file contains an example of how to use the functions in the repository.
+	- results_heuristics.py: This file contains functions for running all the heuristics across multiple budget factors and input parameters. For each BFLP heuristic, a function for running the heuristics with multiple inputs (function name starting with get_) exists, resulting in a json, and a function for converting these results into more easily readable excel tables (function name starting with write_). Any results created here will be saved in the own_results folder, which will be created if it does not exist yet. For the BUAP, there is one function that runs all the heuristics on a single instance and the corresponding function which writes the results into a table.
 	- utils.py: This file contains a few subroutines that are useful for reading and writing data, and some subroutines that are used in multiple heuristics. 
 
 ## Example
 
-We provide a short code example of how to use this code. In this example, we run the open greedy algorithm on Instance 1 to test out the different values for the parameters n_c and d perform across different budgets. This is assuming that we have the results for the BFLP MIP for this instance saved in the file instance_1_BFLP_MIP.json in the own_results folder.
+We provide a short code example of how to use this code. In this example, we run the open greedy algorithm on Instance 1 to test out how different values for the parameters n_c and d perform across different budgets. This is assuming that we have the results for the BFLP MIP for this instance saved in the file instance_1_BFLP_MIP.json in the own_results folder.
 
 ```python
 from utils import *
