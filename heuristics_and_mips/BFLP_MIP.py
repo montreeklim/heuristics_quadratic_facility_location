@@ -3,6 +3,7 @@ Function for solving the BFLP MIP
 """
 import pyomo.environ as pyo
 from pyomo.opt import SolverStatus, TerminationCondition
+from pyomo.core.base.constraint import Constraint
 import time
 from utils import *
 
@@ -18,11 +19,17 @@ def obj_expression(m):
 def define_utilization(m,j):
     return m.u[j] == sum(m.exp_travelers[(i, j)] * m.x[(i, j)] for (i, j2) in m.travel_pairs if j2 == j) / m.cap[j]
 
+
 def assign_to_one_cstr(m, i):
+    eligible_js = [j for (i2, j) in m.travel_pairs if i2 == i]
+    if not eligible_js:
+        return Constraint.Skip
+        
+    expr = sum(m.x[i, j] for j in eligible_js)
+    
     if m.strict_assign_to_one:
-        return sum(m.x[(i, j)] for (i2, j) in m.travel_pairs if i2 == i) == 1
-    else:
-        return sum(m.x[(i, j)] for (i2, j) in m.travel_pairs if i2 == i) <= 1
+        return expr == 1
+    return expr <= 1
     
 def assign_to_open_cstr(m, i, j):
     return m.y[j] >= m.x[(i, j)]

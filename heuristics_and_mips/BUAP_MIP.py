@@ -6,6 +6,8 @@ import pyomo.environ as pyo
 from pyomo.opt import SolverStatus, TerminationCondition
 import time
 from utils import *
+from pyomo.core.base.constraint import Constraint
+
 
 def cap_init(m, j):
     return m.users_and_facs_df.at[j, 'capacity'] * m.cap_factor.value
@@ -32,10 +34,15 @@ def utilization_cstr(m, j):
         j] <= m.y[j]
 
 def assign_to_one_cstr(m, i):
+    eligible_js = [j for (i2, j) in m.travel_pairs if i2 == i]
+    if not eligible_js:
+        return Constraint.Skip
+        
+    expr = sum(m.x[i, j] for j in eligible_js)
+    
     if m.strict_assign_to_one:
-        return sum(m.x[(i, j)] for (i2, j) in m.travel_pairs if i2 == i) == 1
-    else:
-        return sum(m.x[(i, j)] for (i2, j) in m.travel_pairs if i2 == i) <= 1
+        return expr == 1
+    return expr <= 1
 
 def y_init(m,j):
     if j in m.open_facs:

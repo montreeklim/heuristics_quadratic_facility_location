@@ -18,28 +18,16 @@ users_and_facs_df, travel_dict, users, facs = load_an_instance(1, False)
 
 ## Example
 
-We provide a short code example of how to use this code. In this example, we run the open greedy algorithm on Instance 1 to test out how different values for the parameters $n_c$ and $d$ perform across different budgets. This is assuming that we have the results for the BFLP MIP for this instance saved in the file ```instance_1_BFLP_MIP.json``` in the own_results folder.
+We provide a short code example of how to use this code in ```main.py```. To run the file, make sure you have navigated to the repository folder in your terminal. Then, you can run the file using ```python3 ./heuristics_and_mips/main.py```.
+In this example, we run the open greedy algorithm on Instance 1 to test out how different values for the parameters $n_c$ and $d$ perform across different budgets. This is assuming that we have the results for the BFLP MIP for this instance saved in the file ```instance_1_BFLP_MIP.json``` in the own_results folder. 
 
-```python
-from utils import *
-from results_heuristics import * 
-
-users_and_facs_df, travel_dict, users, facs = load_an_instance(1)
-
-results = get_results_open_greedy(users_and_facs_df, travel_dict, users, facs, 
-                            budget_factors = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1], 
-                            cap_factor=1.5, threads=1, tolerance=0.0,
-                            cutoff_localsearch = 0.2, num_consider_in_relaxation = 50, 
-                            num_consider_per_iterations = [5,50], time_limit_relaxation=1000,
-                            assignment_methods =["greedy_assign"],local_search_methods = ["local_random_reassign"], 
-                            time_limit_while_localsearch = 1, num_fix_assignment_iterations = [len(facs)],
-                            depths_greedy_reassign = [1,2],
-                            final_assignment_methods = ["relaxation_rounding"],
-                            output_filename = "open_greedy_instance_1.json")
-
-write_results_open_greedy_table("open_greedy_instance_1.json", "open_greedy_instance_1.xlsx","instance_1_BFLP_MIP.json")
-
-```
 
 ## Requirements for running the code
-Apart from some common python packages, the code requires Pyomo and Geopy. In addition, a Gurobi license and installation is required.
+Before cloning the code, make sure you have [git large file storage](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed. Note that the data files will not be properly downloaded if you just download the zip file.
+Before running the code, make sure you have the below installed:
+- python3
+- numpy
+- pandas
+- geopy
+- pyomo
+- gurobi
