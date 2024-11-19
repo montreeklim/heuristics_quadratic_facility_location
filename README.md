@@ -15,7 +15,7 @@ users_and_facs_df, travel_dict, users, facs = load_an_instance(1, False)
 	- ```BUAP_MIP.py```: This file contains the code for running the BUAP MIP and also for editing the model, as needed for `relaxation rouding` with the first version of `close greedy`.
 	- ```results_heuristics.py```: This file contains functions for running all the heuristics across multiple budget factors and input parameters. For each BFLP heuristic, we provide a function for running the heuristics with multiple inputs (see the function name starting with `get_`) is provided that results in a JSON file. We also provide a function for converting these results into more easily readable Excel tables (see the function name starting with `write_`). Any results created here are saved in the `own_results` folder, which is created if it does not exist yet. For the BUAP, there is one function that runs all the heuristics on a single instance and the corresponding function which writes the results into a table.
 	- ```utils.py```: This file contains a few subroutines that are useful for reading and writing data, and some subroutines that are used in multiple heuristics.
- - ```main.py```: This file contains a concrete example of how to run the functions in the repository. The line `results = ` may be changed to run the relevant heuristic (with the appropriate data input existing).
+ 	- ```main.py```: This file contains a concrete example of how to run the functions in the repository. The line `results = ` may be changed to run the relevant heuristic (with the appropriate data input existing).
 
 ## Example
 
