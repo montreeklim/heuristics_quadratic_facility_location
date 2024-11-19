@@ -1,6 +1,19 @@
 # Heuristics for a capacitated facility location problem with a quadratic objective function
 This project contains the code used in both M. Schmidt's completed master thesis and the article **The Balanced Facility Location Problem: Complexity and Heuristics** by M. Schmidt and B. Singh which is currently under review. A preprint of the article is available on [Optimization Online](https://optimization-online.org/2024/03/the-balanced-facility-location-problem-complexity-and-heuristics/). We provide the implementations of all the algorithms and heuristics discussed in the article as well as the the instances we use to test our heuristics on.
 
+
+## Requirements for running the code
+Before cloning the code, make sure you have [Git Large File Storage (Git LFS)](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed. Please see instructions for downloading and installing Git LFS on the linked website. Note that the data files will not function properly, due to their size, if you just download the zipped file. After installing Git LFS, clone the repository as usual (with `git clone`) to get the actual data files. Then, navigate into the required folder as usual (with `cd`) and pull the large data files with Git LFS (`git lfs pull`)
+ 
+Further, before running the code, make sure you have the below installed and linked with their respective paths (see instructions on installation on their respective pages):
+- python3
+- numpy
+- pandas
+- geopy
+- pyomo
+- gurobi
+
+  
 ## Repository content
 Please refer to the preprint for the terminology. The repository is structured as follows:
 - ```data```: This folder contains the data for the four instances. For each instance, there is a file containing the travel probabilities $P_{ij}$ (e.g., ```instance_1_travel_dict.json.pbz2```) and a file containing the rest of the input data in a dataframe (e.g., ```instance_1_users_and_facs.csv```). For each instance, we also provide a corresponding instance where the capacity has been scaled to $C_j = \sum_{i \in I} U_i P_{ij}$ (```instance_1_suff_users_and_facs.csv```). 
@@ -18,18 +31,4 @@ users_and_facs_df, travel_dict, users, facs = load_an_instance(1, False)
  	- ```main.py```: This file contains a concrete example of how to run the functions in the repository. The line `results = ` may be changed to run the relevant heuristic (with the appropriate data input existing).
 
 ## Example
-
-We provide a short code example of how to use this code in ```main.py```. To run the file, make sure you have navigated to the repository folder in your terminal. Then, you can run the file using ```python3 ./heuristics_and_mips/main.py```.
-In this example, we run the open greedy algorithm on Instance 1 to test out how different values for the parameters $n_c$ and $d$ perform across different budgets. This is assuming that we have the results for the BFLP MIP for this instance saved in the file ```instance_1_BFLP_MIP.json``` in the own_results folder. 
-
-
-## Requirements for running the code
-Before cloning the code, make sure you have [Git Large File Storage (Git LFS)](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed. Please see instructions for downloading and installing Git LFS on the linked website. Note that the data files will not function properly, due to their size, if you just download the zipped file. After installing Git LFS, clone the repository as usual (with `git clone`) to get the actual data files. Then, navigate into the required folder as usual (with `cd`) and pull the large data files with Git LFS (`git lfs pull`)
- 
-Further, before running the code, make sure you have the below installed and linked with their respective paths (see instructions on installation on their respective pages):
-- python3
-- numpy
-- pandas
-- geopy
-- pyomo
-- gurobi
+We provide a short concrete example of how to run this code in the ```main.py``` file. To run the file, make sure you have navigated to the appropriate repository folder in your terminal. Then, run the file from the terminal using ```python3 ./heuristics_and_mips/main.py``` or directly from a python interface (such as, Spyder). In this example, by default, we run the `open greedy` algorithm on Instance 1. The algorithm tests out how different values for the parameters $n_c$ and $d$ perform across different budgets. The results for the BFLP MIP for this instance are saved in the file ```instance_1_BFLP_MIP.json``` in the `own_results` folder. Similarly, to run the `close greedy` algorithm just copy-paste the corresponding get_ command as we explained above (in this case it is `get_results_close_greedy_final`) into the main file and run it. 
