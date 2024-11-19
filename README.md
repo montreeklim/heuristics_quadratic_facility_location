@@ -23,8 +23,9 @@ In this example, we run the open greedy algorithm on Instance 1 to test out how 
 
 
 ## Requirements for running the code
-Before cloning the code, make sure you have [git large file storage](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed. Note that the data files will not be properly downloaded if you just download the zip file.
-Before running the code, make sure you have the below installed:
+Before cloning the code, make sure you have [Git Large File Storage (Git LFS)](https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) installed. Please see instructions for downloading and installing Git LFS on the linked website. Note that the data files will not function properly, due to their size, if you just download the zipped file. After installing Git LFS, clone the repository as usual (with `git clone`) to get the actual data files. Then, navigate into the required folder as usual (with `cd`) and pull the large data files with Git LFS (`git lfs pull`)
+ 
+Further, before running the code, make sure you have the below installed and linked with their respective paths (see instructions on installation on their respective pages):
 - python3
 - numpy
 - pandas
