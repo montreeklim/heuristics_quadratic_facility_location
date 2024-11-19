@@ -8,14 +8,14 @@ To load the data, we provide the function ```load_an_instance```. An example of 
 ```python
 users_and_facs_df, travel_dict, users, facs = load_an_instance(1, False)
 ```
-- ```heuristics_and_mips```: This folder contains the main part of the code. We will briefly describe the purpose of each of the files:
-	- ```BFLP_heuristics.py```: This file contains the code for all the BFLP heurisitcs. 
+- ```heuristics_and_mips```: This folder contains the main part of the code. We briefly describe the purpose of each of the files:
+	- ```BFLP_heuristics.py```: This file contains the code for all the BFLP heuristics. 
 	- ```BFLP_MIP.py```: This file contains the code for running the BFLP MIP.
-	- ```BUAP_heuristics.py```: This file contains all the BUAP heuristics and also implementations of those that are just needed for use within the BFLP heuristics, e.g. the optimisation of relaxation rounding when used in the first version of close greedy.
-	- ```BUAP_MIP.py```: This file contains the code for running the BUAP MIP and also for editing the model, as needed for relaxation rouding with the first version of close greedy.
-    - ```main.py```: This file contains an example of how to use the functions in the repository.
-	- ```results_heuristics.py```: This file contains functions for running all the heuristics across multiple budget factors and input parameters. For each BFLP heuristic, a function for running the heuristics with multiple inputs (function name starting with get_) exists, resulting in a json, and a function for converting these results into more easily readable excel tables (function name starting with write_). Any results created here will be saved in the own_results folder, which will be created if it does not exist yet. For the BUAP, there is one function that runs all the heuristics on a single instance and the corresponding function which writes the results into a table.
-	- ```utils.py```: This file contains a few subroutines that are useful for reading and writing data, and some subroutines that are used in multiple heuristics. 
+	- ```BUAP_heuristics.py```: This file contains all the BUAP heuristics and also implementations of those that are just needed for use within the BFLP heuristics; e.g., the optimization of `relaxation rounding` when used in the first version of `close greedy`.
+	- ```BUAP_MIP.py```: This file contains the code for running the BUAP MIP and also for editing the model, as needed for `relaxation rouding` with the first version of `close greedy`.
+	- ```results_heuristics.py```: This file contains functions for running all the heuristics across multiple budget factors and input parameters. For each BFLP heuristic, we provide a function for running the heuristics with multiple inputs (see the function name starting with `get_`) is provided that results in a JSON file. We also provide a function for converting these results into more easily readable Excel tables (see the function name starting with `write_`). Any results created here are saved in the `own_results` folder, which is created if it does not exist yet. For the BUAP, there is one function that runs all the heuristics on a single instance and the corresponding function which writes the results into a table.
+	- ```utils.py```: This file contains a few subroutines that are useful for reading and writing data, and some subroutines that are used in multiple heuristics.
+ - ```main.py```: This file contains a concrete example of how to run the functions in the repository. The line `results = ` may be changed to run the relevant heuristic (with the appropriate data input existing).
 
 ## Example
 
