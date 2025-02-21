@@ -1,5 +1,5 @@
 # Heuristics for a capacitated facility location problem with a quadratic objective function
-This project contains the code used in both M. Schmidt's completed master thesis and the article **The Balanced Facility Location Problem: Complexity and Heuristics** by M. Schmidt and B. Singh which is currently under review. A preprint of the article is available on [Optimization Online](https://optimization-online.org/2024/03/the-balanced-facility-location-problem-complexity-and-heuristics/). We provide the implementations of all the algorithms and heuristics discussed in the article as well as the the instances we use to test our heuristics on.
+This project contains the code used in both M. Schmidt's completed master thesis and the article **The Balanced Facility Location Problem: Complexity and Heuristics** by M. Schmidt and B. Singh published in the [INFORMS Journal on Computing](https://pubsonline.informs.org/doi/full/10.1287/ijoc.2024.0693). We provide the implementations of all the algorithms and heuristics discussed in the article as well as the the instances we use to test our heuristics on.
 
 
 ## Requirements for running the code
