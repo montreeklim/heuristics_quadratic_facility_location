@@ -67,28 +67,30 @@ def save_travel_dict(travel_dict, travel_dict_filename, abs_path=None):
         cPickle.dump(travel_dict, f)
 
 
-def load_users_and_facs(users_and_facs_filename="users_and_facilities.csv", abs_path=None):
-    if not abs_path:
-        abs_path = os.getcwd() + "/data"
-    users_and_facs_df = pd.read_csv(Path(abs_path + "/" + users_and_facs_filename))
-    return users_and_facs_df
+# compute project_root once
+MODULE_DIR   = Path(__file__).resolve().parent        # …/heuristics_and_mips
+PROJECT_ROOT = MODULE_DIR.parent                      # …/heuristics_quadratic_facility_location
+DATA_DIR     = PROJECT_ROOT / "data"
 
+def load_users_and_facs(users_and_facs_filename="users_and_facilities.csv",
+                        abs_path: str | Path = None):
+    data_dir = Path(abs_path) if abs_path else DATA_DIR
+    file_path = data_dir / users_and_facs_filename
+    return pd.read_csv(file_path)
 
-def load_travel_dict(travel_dict_filename="travel_dict.json.pbz2", abs_path=None):
-    if not abs_path:
-        abs_path = os.getcwd() + "/data"
-    data = bz2.BZ2File(Path(abs_path + "/" + travel_dict_filename), 'rb')
-    travel_dict = cPickle.load(data)
-    travel_dict = {int(i): {int(j): travel_dict[i][j] for j in travel_dict[i]} for i in travel_dict}
-    return travel_dict
+def load_travel_dict(travel_dict_filename="travel_dict.json.pbz2",
+                     abs_path: str | Path = None):
+    data_dir = Path(abs_path) if abs_path else DATA_DIR
+    with bz2.BZ2File(data_dir / travel_dict_filename, 'rb') as f:
+        raw = cPickle.load(f)
+    return {int(i): {int(j): raw[i][j] for j in raw[i]} for i in raw}
 
-def load_facility_distance_dict(facility_distance_dict_filename = "facility_distance_dict.json.pbz2", abs_path=None):
-    if not abs_path:
-        abs_path = os.getcwd() + "/data"
-    data = bz2.BZ2File(Path(abs_path + "/" + facility_distance_dict_filename), 'rb')
-    travel_dict = cPickle.load(data)
-    travel_dict = {int(i): {int(j): travel_dict[i][j] for j in travel_dict[i]} for i in travel_dict}
-    return travel_dict
+def load_facility_distance_dict(facility_distance_dict_filename="facility_distance_dict.json.pbz2",
+                                abs_path: str | Path = None):
+    data_dir = Path(abs_path) if abs_path else DATA_DIR
+    with bz2.BZ2File(data_dir / facility_distance_dict_filename, 'rb') as f:
+        raw = cPickle.load(f)
+    return {int(i): {int(j): raw[i][j] for j in raw[i]} for i in raw}
 
 def load_input_data(
     users_and_facilities_filename="users_and_facilities.csv",
