@@ -292,14 +292,14 @@ def write_greedy_results(greedy_results_list, naive_results_list, users_and_facs
     """
     # make sure the greedy results are sorted in increasing order by number of users and then number of facilities
     greedy_results_list = sorted(greedy_results_list, key=lambda d: len(d['model_details']['users']) +
-                                                                    1e-6 * len(d['model_details']['facs']))
+                                                                   1e-6 * len(d['model_details']['facs']))
 
     # make dictionaries where the keys are the users and facilities of an instance and the values are the results
     # to allow comparing the same instances with each other
     greedy_results_dict = {(tuple(results['model_details']['users']), tuple(results['model_details']['facs'])):
                                results for results in greedy_results_list}
     naive_results_dict = {(tuple(results['model_details']['users']), tuple(results['model_details']['facs'])):
-                              results for results in naive_results_list}
+                               results for results in naive_results_list}
 
     # if the naive method needed post-processing, it did not return a lower bound
     # in that case the objective values are compared, instead of the optimality gaps
@@ -312,6 +312,11 @@ def write_greedy_results(greedy_results_list, naive_results_list, users_and_facs
     # init
     nr_of_users_list = []
     nr_of_facs_list = []
+    
+    # New lists to store the bounds
+    analytic_lower_bound_list = []
+    greedy_upper_bound_list = []
+
     if is_lb_available:
         naive_gap_list = []
         greedy_gap_list = []
@@ -332,9 +337,15 @@ def write_greedy_results(greedy_results_list, naive_results_list, users_and_facs
 
     # get relevant data
     for key in greedy_results_dict:
+        # Extract greedy upper bound (objective value)
         greedy_obj = greedy_results_dict[key]['solution_details']['objective_value']
+        greedy_upper_bound_list.append(greedy_obj) # Store the greedy upper bound
+
         if is_lb_available:
+            # Extract analytic lower bound
             greedy_lb = greedy_results_dict[key]['solution_details']['lower_bound']
+            analytic_lower_bound_list.append(greedy_lb) # Store the analytic lower bound
+            
             greedy_gap = 100 * (greedy_obj - greedy_lb) / greedy_obj
             if greedy_gap <= greedy_results_dict[key]['model_details']['tolerance']:
                 greedy_gap = None
@@ -366,10 +377,11 @@ def write_greedy_results(greedy_results_list, naive_results_list, users_and_facs
             naive_access = 100 * get_overall_access(naive_results_dict[key], users_and_facs_df, travel_dict)
             delta_access = 100 * (greedy_access - naive_access) / naive_access
             _, _, naive_wcv = get_weighted_utilization_figures(naive_results_dict[key], users_and_facs_df,
-                                                               travel_dict)
+                                                                 travel_dict)
             naive_wcv = 100 * naive_wcv
             delta_wcv = 100 * (naive_wcv - greedy_wcv) / naive_wcv
         else:
+            analytic_lower_bound_list.append("-") # Add placeholder if no naive result
             if is_lb_available:
                 naive_gap = "-"
                 guarantee = "-"
@@ -405,6 +417,9 @@ def write_greedy_results(greedy_results_list, naive_results_list, users_and_facs
     # write the excel file
     if is_lb_available:
         data = {'|I|': nr_of_users_list, '|J|': nr_of_facs_list,
+                # Add the new columns to the data dictionary
+                'Analytic Lower Bound': analytic_lower_bound_list,
+                'Greedy Upper Bound': greedy_upper_bound_list,
                 'Gap [%] - Naive ': naive_gap_list, 'Gap [%] - Algorithm': greedy_gap_list,
                 'Gap [%] - Guarantee': guarantee_list,
                 'Time [s] - Naive': naive_solving_time_list, 'Time [s] - Algorithm': greedy_solving_time_list,
@@ -416,6 +431,8 @@ def write_greedy_results(greedy_results_list, naive_results_list, users_and_facs
                 }
     else:
         data = {'|I|': nr_of_users_list, '|J|': nr_of_facs_list,
+                # Add the new columns to the data dictionary
+                'Greedy Upper Bound': greedy_upper_bound_list,
                 'Objective value - Naive ': naive_obj_list, 'Objective value - Algorithm': greedy_obj_list,
                 'Objective value [%] - Delta': delta_obj_list,
                 'Time [s] - Naive': naive_solving_time_list, 'Time [s] - Algorithm': greedy_solving_time_list,
